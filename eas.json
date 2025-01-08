@@ -1,0 +1,29 @@
+{
+  "cli": {
+    "version": ">= 14.2.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME": "ds5qcovom",
+        "EXPO_PUBLIC_BASE_URL": "https://minimercadoverde.vercel.app"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME": "ds5qcovom",
+        "EXPO_PUBLIC_BASE_URL": "https://minimercadoverde.vercel.app"
+      }
+    },
+    "production": {
+      "autoIncrement": true
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
