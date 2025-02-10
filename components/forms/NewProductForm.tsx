@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 import axios from "axios";
 import { ThemedText } from "../ThemedText";
+import { headers } from "@/utils/consts";
 
 const NewProductForm = ({ barcode }: { barcode: string }) => {
   const [formState, setFormState] = useState<
@@ -32,7 +33,7 @@ const NewProductForm = ({ barcode }: { barcode: string }) => {
     await axios
       .post(
         `${process.env.EXPO_PUBLIC_BASE_URL}/api/novelties/${barcode}?type=new_product`,
-        body
+        body , {headers}
       )
       .then(() => setFormState("success"))
       .catch(() => setFormState("fail"));

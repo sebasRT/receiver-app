@@ -1,0 +1,1 @@
+export const headers = {'api_key': process.env.EXPO_PUBLIC_API_KEY}

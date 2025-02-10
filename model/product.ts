@@ -1,15 +1,16 @@
+export type StockStatus = "low" | "out" | "available"
 export type Product = {
-    _id: string; 
+    _id: string;
     barcode: string;
     searchString: string;
-    name: string; 
+    name: string;
     brand: string;
-    measure: string; 
-    description: string; 
+    measure: string;
+    description: string;
     image: string;
-    costPrice: number; 
+    costPrice: number;
     price: number;
-    category: string; 
+    category: string;
     subcategory: string;
-    stockStatus: "low" | "out" | "available"
+    stockStatus: StockStatus;
 }

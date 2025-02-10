@@ -9,14 +9,16 @@
       "distribution": "internal",
       "env": {
         "EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME": "ds5qcovom",
-        "EXPO_PUBLIC_BASE_URL": "https://minimercadoverde.vercel.app"
+        "EXPO_PUBLIC_BASE_URL": "https://minimercadoverde.vercel.app",
+        "EXPO_PUBLIC_API_KEY":"s-74O31-v"
       }
     },
     "preview": {
       "distribution": "internal",
       "env": {
         "EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME": "ds5qcovom",
-        "EXPO_PUBLIC_BASE_URL": "https://minimercadoverde.vercel.app"
+        "EXPO_PUBLIC_BASE_URL": "https://minimercadoverde.vercel.app",
+        "EXPO_PUBLIC_API_KEY":"s-74O31-v"
       }
     },
     "production": {

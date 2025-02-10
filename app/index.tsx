@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import ProductCard from "@/components/ProductCard";
 import NewProductForm from "@/components/forms/NewProductForm";
+import { headers } from "@/utils/consts";
 
 export default function HomeScreen() {
   const [product, setProduct] = useState<null | Product>(null);
@@ -17,10 +18,12 @@ export default function HomeScreen() {
   useEffect(() => {
     setProduct(null);
     axios
-      .get(`${process.env.EXPO_PUBLIC_BASE_URL}/api/products/${barcode}`)
+      .get(`${process.env.EXPO_PUBLIC_BASE_URL}/api/products/${barcode}`, {headers})
       .then((res) => setProduct(res.data))
       .catch((error) => {
         if (error.status === 404) setNotFound(true);
+        console.log(error);
+        
       });
   }, [barcode]);
 
@@ -41,7 +44,7 @@ export default function HomeScreen() {
           setNotFound(false);
         }}
       />
-      <View>{product && !notFound && <ProductCard product={product} />}</View>
+      <View>{product?.barcode && !notFound && <ProductCard product={product} />}</View>
       {notFound && (
         <View>
           <ThemedText type="subtitle" style={{textAlign: "center", opacity: 0.8}}>Nuevo Producto</ThemedText>

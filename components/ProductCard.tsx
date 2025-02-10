@@ -1,15 +1,69 @@
-import { Product } from "@/model/product";
+import { Product, StockStatus } from "@/model/product";
 import ProductImage from "./ProductImage";
 import ReportNovelty from "./ReportNovelty";
 import { ThemedText } from "./ThemedText";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { formatPrice } from "@/globalFunctions";
+import { Button } from "react-native-elements";
+import { useState } from "react";
+import axios from "axios";
+import { headers } from "@/utils/consts";
 
 const ProductCard = ({ product }: { product: Product }) => {
-  const { name, brand, searchString, price, measure, image, costPrice } =
-    product;
+  const {
+    name,
+    brand,
+    barcode,
+    searchString,
+    price,
+    measure,
+    image,
+    costPrice,
+    stockStatus,
+  } = product;
+
+  const [status, setStatus] = useState(stockStatus);
+
+  const statusMessage = {
+    out: "Agotado",
+    low: "Poco",
+    available: "Disponible",
+  };
+
+  const stockStatusColor = {
+    out: "#ef4444",
+    low: "#fbbf24",
+    available: "#22c55e",
+  };
+
+  const setStockStatus = async (newStockStatus: StockStatus) => {
+     await axios
+      .patch(`${process.env.EXPO_PUBLIC_BASE_URL}/api/products/${barcode}`, {
+        stockStatus: newStockStatus,
+      }, {headers})
+      .then(() => setStatus(newStockStatus))
+      .catch((e) => console.log(e));
+  };
+
   return (
-    <View style={{ alignItems: "center", padding: 30 }}>
+    <View
+      style={{
+        alignItems: "center",
+        padding: 20,
+        borderStartColor: stockStatusColor[status],
+        borderColor: "transparent",
+        borderWidth: 10,
+      }}
+    >
+      <Text
+        style={{
+          color: stockStatusColor[status],
+          position: "fixed",
+          top: -20,
+        }}
+      >
+        {statusMessage[status]}
+      </Text>
       <View
         style={styles.productImage}
         children={<ProductImage img={image} />}
@@ -43,6 +97,36 @@ const ProductCard = ({ product }: { product: Product }) => {
         </View>
       </View>
       <ReportNovelty product={product} />
+      <View style={{ flexDirection: "row", gap: 10, marginTop: 30 }}>
+        <Button
+          title="Escaso"
+          containerStyle={{
+            flex: 1,
+            display: status === "low" ? "none" : "flex",
+          }}
+          buttonStyle={{ backgroundColor: "#fbbf24" }}
+          titleStyle={{ color: "#334155" }}
+          onPress={() => setStockStatus("low")}
+        />
+        <Button
+          title="Disponible"
+          containerStyle={{
+            flex: 1,
+            display: status === "available" ? "none" : "flex",
+          }}
+          buttonStyle={{ backgroundColor: "#22c55e" }}
+          onPress={() => setStockStatus("available")}
+        />
+        <Button
+          title="Agotado"
+          containerStyle={{
+            flex: 1,
+            display: status === "out" ? "none" : "flex",
+          }}
+          buttonStyle={{ backgroundColor: "#ef4444" }}
+          onPress={() => setStockStatus("out")}
+        />
+      </View>
     </View>
   );
 };

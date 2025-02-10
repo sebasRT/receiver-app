@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Product } from "@/model/product";
 import axios from "axios";
+import { headers } from "@/utils/consts";
 
 const ReportNovelty = ({ product }: { product: Product }) => {
   const [showModal, setShowModal] = useState(false);
@@ -33,7 +34,7 @@ const ReportNovelty = ({ product }: { product: Product }) => {
 
   const sendData = async () => {
     const body = {
-      barcode,
+      barcode: barcode.toString(),
       name,
       image,
       key: selectedValue,
@@ -45,7 +46,7 @@ const ReportNovelty = ({ product }: { product: Product }) => {
     await axios
       .post(
         `${process.env.EXPO_PUBLIC_BASE_URL}/api/novelties/${barcode}?type=validate`,
-        body
+        body, {headers}
       )
       .then(() => {
         setFormState("success");
